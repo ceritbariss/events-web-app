@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300..900;1,300..900&display=swap"
+      rel="stylesheet"
+    />
+
+    <script
+      type="module"
+      src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"
+    ></script>
+    <script
+      nomodule
+      src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"
+    ></script>
+
+    <title>EVENTS</title>
+    <link rel="stylesheet" href="/css/etkinlik-ekle.css" />
+  </head>
+  <body>
+    <header class="header">
+      <a href="/user-index?id=<%= user.kullaniciID %>"
+        ><img class="logo" src="img/logo.png" alt="Events-Logo"
+      /></a>
+      <nav class="main-nav">
+        <ul class="main-nav-list">
+          <li>
+            <ion-icon name="today-outline" class="nav-icon"></ion-icon>
+            <a class="main-nav-link" href="#">Etkinlik Ekle</a>
+          </li>
+          <li>
+            <ion-icon name="person-outline" class="nav-icon"></ion-icon>
+            <a
+              class="main-nav-link"
+              href="/user-page?id=<%= user.kullaniciID %>"
+              ><%= user.kullaniciAdi %></a
+            >
+          </li>
+          <li>
+            <ion-icon name="ribbon-outline" class="nav-icon"></ion-icon>
+            <a class="main-nav-link" href="#"><%= user.kullaniciPuan %> Puan</a>
+          </li>
+          <li>
+            <ion-icon name="exit-outline" class="nav-icon"></ion-icon>
+            <a class="main-nav-link" href="/logout">Çıkış</a>
+          </li>
+        </ul>
+      </nav>
+    </header>
+
+    <main>
+      <section class="container etkinlik-section">
+        <div class="etkinlik-grid">
+          <div>
+            <img src="" alt="" class="etkinlik-image" id="etkinlik-img" />
+          </div>
+          <div>
+            <p class="etkinlik-adi" id="etkinlik-adi">Etkinlik Adı</p>
+            <ul class="etkinlik-list">
+              <li class="etkinlik-item">
+                <ion-icon class="event-icon" name="copy-outline"></ion-icon>
+                <span id="etkinlik-kategori">Kategori</span>
+              </li>
+              <li class="etkinlik-item">
+                <ion-icon class="event-icon" name="location-outline"></ion-icon>
+                <span id="etkinlik-konum">Konum</span>
+              </li>
+              <li class="etkinlik-item">
+                <ion-icon name="enter-outline" class="event-icon"></ion-icon>
+                <span id="etkinlik-baslangic">Başlangıç</span>
+              </li>
+              <li class="etkinlik-item">
+                <ion-icon name="exit-outline" class="event-icon"></ion-icon>
+                <span id="etkinlik-bitis">Bitiş</span>
+              </li>
+            </ul>
+
+            <button type="submit" class="etkinlik-btn">Etkinliğe Katıl</button>
+          </div>
+        </div>
+      </section>
+
+      <section class="container etkinlik-form">
+        <form
+          action="/etkinlik-ekle"
+          method="POST"
+          enctype="multipart/form-data"
+        >
+          <div class="add-form">
+            <p class="add-info">Etkinlik Ekle</p>
+            <ul class="add-list">
+              <li class="add-item">
+                <p class="add-text">Etkinlik Adı:</p>
+                <input type="text" name="e_ad" />
+              </li>
+              <li class="add-item">
+                <p class="add-text">Kategori:</p>
+                <select class="e_kategori" name="e_kategori">
+                  <option value="" disabled selected>Seçiniz</option>
+                  <option value="Konser">Konser</option>
+                  <option value="Tiyatro">Tiyatro</option>
+                  <option value="Festival">Festival</option>
+                  <option value="Standup">Stand Up</option>
+                </select>
+              </li>
+              <li class="add-item">
+                <p class="add-text">Etkinlik Fotoğrafı:</p>
+                <input type="file" name="e_foto" accept="image/*" />
+              </li>
+              <li class="add-item">
+                <p class="add-text">Etkinlik Tarihi:</p>
+                <input type="date" name="e_tarih" />
+              </li>
+              <li class="add-item">
+                <p class="add-text">Başlangıç Saati:</p>
+                <input type="time" name="e_bassaat" />
+              </li>
+              <li class="add-item">
+                <p class="add-text">Konum İl/İlçe:</p>
+                <input type="text" name="e_konum" />
+              </li>
+              <li class="add-item">
+                <p class="add-text">Etkinlik Bitiş Tarihi:</p>
+                <input type="date" name="e_bitisTarih" />
+              </li>
+              <li class="add-item">
+                <p class="add-text">Bitiş Saati:</p>
+                <input type="time" name="e_sonSaat" />
+              </li>
+            </ul>
+            <button class="etkinlik-btn add-btn" value="submit">
+              Etkinlik Ekle
+            </button>
+          </div>
+        </form>
+      </section>
+    </main>
+    <script src="/js/etkinlik-ekle.js"></script>
+  </body>
+</html>

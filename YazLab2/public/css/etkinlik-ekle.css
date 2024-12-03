@@ -1,0 +1,282 @@
+/*
+--- 01 TYPOGRAPHY SYSTEM
+
+- Font sizes (px)
+10 / 12 / 14 / 16 / 18 / 20 / 24 / 30 / 36 / 44 / 52 / 62 / 74 / 86 / 98
+
+- Font weights
+Default: 400
+
+
+- Line heights
+Default: 1
+
+
+- Letter spacing
+
+
+--- 02 COLORS
+
+- Primary:
+- Tints:
+- Header: #e8f7f9
+#15aabf
+- Shades: 
+
+- Accents:
+- Greys
+#555
+#333
+
+--- 05 SHADOWS
+
+--- 06 BORDER-RADIUS
+
+--- 07 WHITESPACE
+
+- Spacing system (px)
+2 / 4 / 8 / 12 / 16 / 24 / 32 / 48 / 64 / 80 / 96 / 128
+*/
+
+html {
+  font-size: 62.5%;
+}
+
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: inter;
+  font-weight: 400;
+  line-height: 1;
+  color: #555;
+}
+
+h3 {
+  font-size: 2.4rem;
+}
+
+.container {
+  max-width: 120rem;
+  padding: 0 3.2rem;
+  margin: 0 auto;
+}
+
+/*********************************/
+/*******   GRID    **********/
+
+.grid {
+  display: grid;
+  gap: 3.2rem 8rem;
+}
+
+.grid--3-cols {
+  grid-template-columns: repeat(3, 1fr);
+}
+
+/*********************************/
+/*******   HEADER    **********/
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #e8f7f9;
+
+  height: 9.6rem;
+  padding: 0 4.8rem;
+}
+
+.logo {
+  height: 4.2rem;
+}
+
+/*********************************/
+/*******   NAVIGATION   **********/
+
+.main-nav-list {
+  list-style: none;
+  display: flex;
+  gap: 3.2rem;
+  align-items: center;
+}
+
+.main-nav-list li {
+  display: flex;
+  align-items: center;
+}
+
+.main-nav-link:visited,
+.main-nav-link:link {
+  display: inline-block;
+  text-decoration: none;
+  color: #333;
+  font-weight: 500;
+  font-size: 1.8rem;
+  transition: all 0.3s;
+}
+
+.main-nav-link:hover,
+.main-nav-link:active {
+  color: #15aabf;
+}
+
+.nav-icon {
+  width: 2.4rem;
+  height: 2.4rem;
+  color: #15aabf;
+  margin-right: 1rem;
+}
+
+/*********************************/
+/*******   GRID   **********/
+
+.etkinlik-grid {
+  display: grid;
+  gap: 9.6rem;
+  grid-template-columns: 2fr 3fr;
+}
+
+.etkinlik-image {
+  width: 100%;
+  max-height: 25rem;
+  border-radius: 1rem;
+  box-shadow: 2px 4px 6px rgba(0, 0, 0, 0.2);
+}
+
+/*********************************/
+/*******  ETKİNLİK PAGE   **********/
+
+.etkinlik-section {
+  background-color: #e8f7f9;
+  border: 0.05rem solid #333;
+  border-radius: 2rem;
+  padding: 2.4rem;
+  margin-top: 3.6rem;
+}
+
+.etkinlik-adi {
+  font-size: 4.4rem;
+  font-family: rubik;
+  font-weight: 600;
+  margin-bottom: 2.4rem;
+}
+
+.etkinlik-list {
+  list-style: none;
+  font-size: 2rem;
+  line-height: 3rem;
+  margin-bottom: 3.2rem;
+}
+
+.etkinlik-item {
+  display: flex;
+  align-items: center;
+  gap: 1.2rem;
+}
+
+.event-icon {
+  font-size: 2.4rem;
+  color: #15aabf;
+}
+
+.etkinlik-btn {
+  font-size: 1.6rem;
+  font-weight: 600;
+  padding: 1rem 2.4rem;
+  margin-left: auto;
+  border-radius: 1.2rem;
+  background-color: #e8f7f9;
+  color: #333;
+  transition: 0.5s;
+  box-shadow: 2px 4px 6px rgba(0, 0, 0, 0.2);
+}
+
+.etkinlik-btn:hover {
+  background-color: #15aabf;
+}
+
+/*********************************/
+/*******  ETKİNLİK EKLEME FORMU   **********/
+
+.etkinlik-form {
+  background-color: #e8f7f9;
+  border: 0.05rem solid #333;
+  border-radius: 2rem;
+  padding: 2.4rem;
+  margin-top: 3.6rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.add-form {
+  max-width: 100%;
+  width: 100%;
+}
+
+.add-info {
+  font-size: 2.4rem;
+  font-weight: 700;
+  text-align: center;
+  margin-bottom: 2rem;
+  color: #333;
+}
+
+.add-list {
+  list-style: none;
+}
+
+.add-item {
+  margin-bottom: 2rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.add-text {
+  font-size: 1.4rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  color: #555;
+}
+
+input[type="text"],
+input[type="time"],
+input[type="date"],
+select {
+  font-size: 1.6rem;
+  padding: 1rem;
+  border: 0.1rem solid #ccc;
+  border-radius: 0.5rem;
+  width: 100%;
+}
+
+input[type="text"]:focus,
+input[type="time"]:focus,
+input[type="date"]:focus,
+select:focus {
+  border-color: #007bff;
+  outline: none;
+  box-shadow: 0 0 4px rgba(0, 123, 255, 0.5);
+}
+
+.add-btn {
+  display: block;
+  margin: 0rem auto;
+  max-width: 50%;
+  width: 100%;
+}
+
+input[type="file"] {
+  padding: 0.5rem;
+  width: 64rem;
+}
+
+input[type="text"]::placeholder,
+input[type="time"]::placeholder,
+input[type="date"]::placeholder {
+  color: #aaa;
+  font-size: 1.4rem;
+}

@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap"
+      rel="stylesheet"
+    />
+    <script
+      type="module"
+      src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"
+    ></script>
+    <script
+      nomodule
+      src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"
+    ></script>
+
+    <title>EVENTS</title>
+
+    <link rel="stylesheet" href="/css/index_style.css" />
+  </head>
+  <body>
+    <header class="header">
+      <a href="/"><img class="logo" src="img/logo.png" alt="Events-Logo" /></a>
+
+      <nav class="main-nav">
+        <ul class="main-nav-list">
+          <li>
+            <ion-icon name="person-outline" class="nav-icon"></ion-icon>
+            <a class="main-nav-link show-modal" href="#">Giriş</a>
+          </li>
+          <li>
+            <ion-icon name="person-add-outline" class="nav-icon"></ion-icon>
+            <a class="main-nav-link show-modal" href="#">Kayıt Ol</a>
+          </li>
+        </ul>
+      </nav>
+    </header>
+
+    <div class="kayit gizle">
+      <button class="kayit-kapat">&times;</button>
+      <h1 class="kayit-name">Kayıt Ol</h1>
+      <div>
+        <form action="/register" method="POST" enctype="multipart/form-data">
+          <ul class="kayit-list">
+            <li class="kayit-item">
+              <p class="kayit-text">Ad:</p>
+              <input type="text" name="k_ad" />
+            </li>
+            <li class="kayit-item">
+              <p class="kayit-text">Soyad:</p>
+              <input type="text" name="k_soyad" />
+            </li>
+            <li class="kayit-item">
+              <p class="kayit-text">Profil Fotoğrafı:</p>
+              <input type="file" accept="image/*" name="k_foto" />
+            </li>
+            <li class="kayit-item">
+              <p class="kayit-text">Kullanıcı Adı:</p>
+              <input type="text" name="k_kullaniciAdi" />
+            </li>
+            <li class="kayit-item">
+              <p class="kayit-text">Şifre:</p>
+              <input type="password" name="k_sifre" />
+            </li>
+            <li class="kayit-item">
+              <p class="kayit-text">Doğum Tarihi:</p>
+              <input type="date" name="k_dt" />
+            </li>
+            <li class="kayit-item">
+              <p class="kayit-text">Cinsiyet:</p>
+              <select class="kayit-cinsiyet" name="k_cinsiyet" required>
+                <option value="" disabled selected>Seçiniz</option>
+                <option value="Erkek">Erkek</option>
+                <option value="Kadın">Kadın</option>
+              </select>
+            </li>
+            <li class="kayit-item">
+              <p class="kayit-text">Yaşadığınız İl/İlçe:</p>
+              <input type="text" name="k_konum" />
+            </li>
+            <li class="kayit-item">
+              <p class="kayit-text">E-posta Adresi:</p>
+              <input type="text" name="k_eposta" />
+            </li>
+            <li class="kayit-item">
+              <p class="kayit-text">Telefon Numarası:</p>
+              <input
+                type="tel"
+                pattern="[0-9]{10}"
+                placeholder="5551234567"
+                name="k_telefon"
+              />
+            </li>
+            <li class="kayit-item">
+              <p class="kayit-text">İlgi Alanları:</p>
+              <ul class="ilgialani-list">
+                <li class="ilgialani-item">
+                  <p class="ilgialani-text">Konser</p>
+                  <input
+                    type="checkbox"
+                    alt="Konser"
+                    name="k_ilgi"
+                    value="Konser"
+                  />
+                </li>
+                <li class="ilgialani-item">
+                  <p class="ilgialani-text">Tiyatro</p>
+                  <input
+                    type="checkbox"
+                    alt="Tiyatro"
+                    name="k_ilgi"
+                    value="Tiyatro"
+                  />
+                </li>
+                <li class="ilgialani-item">
+                  <p class="ilgialani-text">Festival</p>
+                  <input
+                    type="checkbox"
+                    alt="Festival"
+                    name="k_ilgi"
+                    value="Festival"
+                  />
+                </li>
+                <li class="ilgialani-item">
+                  <p class="ilgialani-text">Stand-Up</p>
+                  <input
+                    type="checkbox"
+                    alt="Stand-Up"
+                    name="k_ilgi"
+                    value="Stand-Up"
+                  />
+                </li>
+              </ul>
+            </li>
+          </ul>
+          <button class="kayit-btn">Kayıt Ol</button>
+        </form>
+      </div>
+    </div>
+
+    <div
+      class="giris <%= typeof errorMessage !== 'undefined' && errorMessage ? '' : 'gizle' %>"
+    >
+      <button class="giris-kapat">&times;</button>
+      <h1 class="giris-name">Giriş</h1>
+      <div>
+        <form action="/login" method="POST">
+          <ul class="giris-list">
+            <li class="giris-item">
+              <p class="giris-text">Kullanıcı Adı:</p>
+              <input type="text" name="username" />
+            </li>
+            <li class="giris-item">
+              <p class="giris-text">Şifre:</p>
+              <input type="password" name="password" />
+            </li>
+          </ul>
+          <% if (typeof errorMessage !== 'undefined') { %>
+          <p id="error-message" style="color: red; margin-top: 10px">
+            <%= errorMessage %>
+          </p>
+          <% } %>
+          <button type="submit" class="giris-btn">Giriş</button>
+        </form>
+      </div>
+    </div>
+
+    <div class="kaplama gizle"></div>
+
+    <main>
+      <section class="main-kategoriler container">
+        <nav class="kategori-nav">
+          <ul class="kategori-list">
+            <a href="/?category=konser" class="kategori-btn"
+              ><li class="kategori">
+                <img src="/img/konser-logo.png" class="kategori-img" />
+                <p>Konser</p>
+              </li>
+            </a>
+
+            <a href="/?category=tiyatro" class="kategori-btn"
+              ><li class="kategori">
+                <img src="/img/tiyatro-logo.png" class="kategori-img" />
+                <p>Tiyatro</p>
+              </li></a
+            >
+
+            <a href="/?category=festival" class="kategori-btn"
+              ><li class="kategori">
+                <img src="/img/festival-logo.png" class="kategori-img" />
+                <p>Festival</p>
+              </li>
+            </a>
+
+            <a href="/?category=standup" class="kategori-btn">
+              <li class="kategori">
+                <img src="/img/standup-logo.png" class="kategori-img" />
+                <p>Stund-Up</p>
+              </li>
+            </a>
+          </ul>
+        </nav>
+      </section>
+
+      <section class="events-section">
+        <h3 class="container event-main-name">
+          <% if (category) { %> <%= category.charAt(0).toUpperCase() +
+          category.slice(1) %> Etkinlikleri <% } else { %> Etkinlikler <% } %>
+        </h3>
+        <div class="container grid grid--3-cols">
+          <% if (events.length > 0) { %> <% events.forEach(event => { %>
+          <div class="event">
+            <img
+              src="<%= event.etkinlikFoto %>"
+              alt="<%= event.etkinlikAdi %>"
+              class="event-image"
+            />
+            <div class="event-main">
+              <p class="event-name"><%= event.etkinlikAdi %></p>
+              <ul class="event-items">
+                <li class="event-item">
+                  <ion-icon class="event-icon" name="copy-outline"></ion-icon>
+                  <%= event.etkinlikKategori %>
+                </li>
+                <li class="event-item">
+                  <ion-icon
+                    class="event-icon"
+                    name="location-outline"
+                  ></ion-icon>
+                  <%= event.etkinlikKonum %>
+                </li>
+                <li class="event-item">
+                  <ion-icon
+                    class="event-icon"
+                    name="calendar-outline"
+                  ></ion-icon>
+                  <%= event.etkinlikTarih %> - <%= event.etkinlikSaat %>
+                </li>
+              </ul>
+              <a href="#"
+                ><button class="event-btn">
+                  <strong>Etkinlik Detayları</strong>
+                </button></a
+              >
+            </div>
+          </div>
+          <% }); %> <% } %>
+        </div>
+      </section>
+    </main>
+
+    <script src="/js/index-script.js"></script>
+  </body>
+</html>

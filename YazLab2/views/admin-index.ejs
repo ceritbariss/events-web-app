@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300..900;1,300..900&display=swap"
+      rel="stylesheet"
+    />
+
+    <script
+      type="module"
+      src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"
+    ></script>
+    <script
+      nomodule
+      src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"
+    ></script>
+
+    <title>Etkinlik</title>
+    <link rel="stylesheet" href="css/admin-index.css" />
+  </head>
+  <body>
+    <header class="header">
+      <a href="/admin-index"
+        ><img class="logo" src="img/logo.png" alt="Events-Logo"
+      /></a>
+      <nav class="main-nav">
+        <ul class="main-nav-list">
+          <li>
+            <ion-icon name="person-outline" class="nav-icon"></ion-icon>
+            <a class="main-nav-link" href="#">Admin</a>
+          </li>
+          <li>
+            <ion-icon name="exit-outline" class="nav-icon"></ion-icon>
+            <a class="main-nav-link" href="/logout">Çıkış</a>
+          </li>
+        </ul>
+      </nav>
+    </header>
+
+    <main>
+      <section class="container events-section">
+        <% if (onaysizEtkinlikler && onaysizEtkinlikler.length > 0) { %>
+        <div class="events-scrollable">
+          <p class="events-main-text">Onay Bekleyen Etkinlikler</p>
+          <% onaysizEtkinlikler.forEach(etkinlik => { %>
+
+          <div class="events-blok">
+            <div class="event-image">
+              <img
+                src="<%= etkinlik.etkinlikFoto || '/img/default-event.png' %>"
+                alt="<%= etkinlik.etkinlikAdi %>"
+              />
+            </div>
+            <div class="event-info">
+              <p class="event-name"><%= etkinlik.etkinlikAdi %></p>
+              <ul class="event-items">
+                <li class="etkinlik-item">
+                  <ion-icon class="event-icon" name="copy-outline"></ion-icon>
+                  <%= etkinlik.etkinlikKategori %>
+                </li>
+                <li class="etkinlik-item">
+                  <ion-icon
+                    class="event-icon"
+                    name="location-outline"
+                  ></ion-icon>
+                  <%= etkinlik.etkinlikKonum %>
+                </li>
+                <li class="etkinlik-item">
+                  <ion-icon name="enter-outline" class="event-icon"></ion-icon>
+                  <%= etkinlik.etkinlikTarih %> <%= etkinlik.etkinlikSaat %>
+                </li>
+                <li class="etkinlik-item">
+                  <ion-icon name="exit-outline" class="event-icon"></ion-icon>
+                  <%= etkinlik.etkinlikBitisTarih %> <%=
+                  etkinlik.etkinlikBitisSaat %>
+                </li>
+              </ul>
+              <form
+                action="/admin-index/onayla"
+                method="POST"
+                style="display: inline"
+              >
+                <input
+                  type="hidden"
+                  name="etkinlikID"
+                  value="<%= etkinlik.etkinlikID %>"
+                />
+                <button class="event-ok-btn" type="submit">
+                  <ion-icon
+                    name="checkmark-circle-outline"
+                    class="event-btn-icon"
+                  ></ion-icon>
+                  Onayla
+                </button>
+              </form>
+              <form
+                action="/admin-index/sil"
+                method="POST"
+                style="display: inline"
+              >
+                <input
+                  type="hidden"
+                  name="etkinlikID"
+                  value="<%= etkinlik.etkinlikID %>"
+                />
+                <button class="event-no-btn" type="submit">
+                  <ion-icon
+                    name="close-circle-outline"
+                    class="event-btn-icon"
+                  ></ion-icon>
+                  Sil
+                </button>
+              </form>
+            </div>
+          </div>
+          <% }) %>
+        </div>
+        <% } else { %>
+        <p class="events-main-text">Onay bekleyen etkinlik bulunmamaktadır.</p>
+        <% } %>
+      </section>
+
+      <!-- ETKİNLİKLER -->
+
+      <section class="container events">
+        <% if (onayliEtkinlikler && onayliEtkinlikler.length > 0) { %>
+        <div class="events-scrollable">
+          <p class="events-main-text">Etkinlikler</p>
+          <% onayliEtkinlikler.forEach(etkinlik => { %>
+
+          <div class="events-blok">
+            <div class="events-image">
+              <img
+                src="<%= etkinlik.etkinlikFoto || '/img/default-event.png' %>"
+                alt="<%= etkinlik.etkinlikAdi %>"
+              />
+            </div>
+            <div class="event-info">
+              <form
+                action="/admin-index/guncelle"
+                method="POST"
+                enctype="multipart/form-data"
+                style="display: inline"
+              >
+                <input
+                  type="hidden"
+                  name="etkinlikID"
+                  value="<%= etkinlik.etkinlikID %>"
+                />
+
+                <!-- Düzenlenebilir Alanlar -->
+                <p class="event-name">
+                  <input
+                    type="text"
+                    name="etkinlikAdi"
+                    value="<%= etkinlik.etkinlikAdi %>"
+                  />
+                </p>
+                <ul class="event-items">
+                  <li class="etkinlik-item">
+                    <ion-icon class="event-icon" name="image-outline"></ion-icon>
+                    <input
+                      type="file"
+                      name="etkinlikFoto"
+                      id="etkinlikFoto"
+                      class="event-upload-input"
+                      accept="image/*"
+                    />
+                  </li>
+                  <li class="etkinlik-item">
+                    <ion-icon class="event-icon" name="copy-outline"></ion-icon>
+                    <select name="etkinlikKategori" class="event-category">
+                      <option value="Konser" <%= etkinlik.etkinlikKategori === "Konser" ? "selected" : "" %>>Konser</option>
+                      <option value="Tiyatro" <%= etkinlik.etkinlikKategori === "Tiyatro" ? "selected" : "" %>>Tiyatro</option>
+                      <option value="Festival" <%= etkinlik.etkinlikKategori === "Festival" ? "selected" : "" %>>Festival</option>
+                      <option value="StandUp" <%= etkinlik.etkinlikKategori === "StandUp" ? "selected" : "" %>>StandUp</option>
+                    </select>
+                  </li>
+                  <li class="etkinlik-item">
+                    <ion-icon
+                      class="event-icon"
+                      name="location-outline"
+                    ></ion-icon>
+                    <input
+                      type="text"
+                      name="etkinlikKonum"
+                      value="<%= etkinlik.etkinlikKonum %>"
+                    />
+                  </li>
+                  <li class="etkinlik-item">
+                    <ion-icon
+                      name="enter-outline"
+                      class="event-icon"
+                    ></ion-icon>
+                    <input
+                      type="date"
+                      name="etkinlikTarih"
+                      value="<%= etkinlik.etkinlikTarih %>"
+                    />
+                    <input
+                      type="time"
+                      name="etkinlikSaat"
+                      value="<%= etkinlik.etkinlikSaat %>"
+                    />
+                  </li>
+                  <li class="etkinlik-item">
+                    <ion-icon
+                      name="enter-outline"
+                      class="event-icon"
+                    ></ion-icon>
+                    <input
+                      type="date"
+                      name="etkinlikBitisTarih"
+                      value="<%= etkinlik.etkinlikBitisTarih %>"
+                    />
+                    <input
+                      type="time"
+                      name="etkinlikBitisSaat"
+                      value="<%= etkinlik.etkinlikBitisSaat %>"
+                    />
+                  </li>
+                </ul>
+
+                <button class="event-ok-btn" type="submit">
+                  <ion-icon
+                    name="checkmark-circle-outline"
+                    class="event-btn-icon"
+                  ></ion-icon>
+                  Güncelle
+                </button>
+              </form>
+              <form
+                action="/admin-index/sil"
+                method="POST"
+                style="display: inline"
+              >
+                <input
+                  type="hidden"
+                  name="etkinlikID"
+                  value="<%= etkinlik.etkinlikID %>"
+                />
+                <button class="event-no-btn" type="submit">
+                  <ion-icon
+                    name="close-circle-outline"
+                    class="event-btn-icon"
+                  ></ion-icon>
+                  Sil
+                </button>
+              </form>
+            </div>
+          </div>
+          <% }) %>
+        </div>
+        <% } else { %>
+        <p class="events-main-text">Etkinlik bulunmamaktadır.</p>
+        <% } %>
+      </section>
+    </main>
+  </body>
+</html>

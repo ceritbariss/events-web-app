@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap"
+      rel="stylesheet"
+    />
+
+    <script
+      type="module"
+      src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"
+    ></script>
+    <script
+      nomodule
+      src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"
+    ></script>
+
+    <title>Kullanıcı</title>
+    <link rel="stylesheet" href="css/user_page.css" />
+  </head>
+  <body>
+    <header class="header">
+      <a href="/user-index?id=<%= user.kullaniciID %>"><img class="logo" src="img/logo.png" alt="Events-Logo" /></a>
+      <nav class="main-nav">
+        <ul class="main-nav-list">
+          <li>
+            <ion-icon name="today-outline" class="nav-icon"></ion-icon>
+            <a class="main-nav-link" href="/etkinlik-ekle">Etkinlik Ekle</a>
+          </li>
+          <li>
+            <ion-icon name="person-outline" class="nav-icon"></ion-icon>
+            <a class="main-nav-link" href="#"><%= user.kullaniciAdi %></a>
+          </li>
+          <li>
+            <ion-icon name="ribbon-outline" class="nav-icon"></ion-icon>
+            <a class="main-nav-link" href="#"><%= user.kullaniciPuan %> Puan</a>
+          </li>
+          <li>
+            <ion-icon name="exit-outline" class="nav-icon"></ion-icon>
+            <a class="main-nav-link" href="/logout">Çıkış</a>
+          </li>
+        </ul>
+      </nav>
+    </header>
+
+    <main>
+      <section class="kullanici-grid container">
+        <div class="box-1">
+          <img src="<%= user.kullaniciFoto %>" alt="user" class="user-img" />
+
+          <div class="user-event">
+            <p class="main-text">Katılınan Etkinlikler</p>
+            <div class="katilinan-events">
+              <ul class="events-list">
+                <% etkinlikler.forEach(etkinlik => { %>
+                  <li class="events-item">
+                    <a href="/etkinlik-detay?userId=<%= user.kullaniciID %>&eventId=<%= etkinlik.etkinlikID %>" class="events-link">
+                    <p class="events-text"><%= etkinlik.etkinlikAdi %></p></a>
+                    <form
+                      action="/etkinlik-sil"
+                      method="POST"
+                    >
+                      <input type="hidden" name="userId" value="<%= user.kullaniciID %>" />
+                      <input type="hidden" name="eventId" value="<%= etkinlik.etkinlikID %>" />
+                      <button type="submit" class="icon-only-button">
+                        <ion-icon name="trash-outline" class="events-icon"></ion-icon>
+                      </button>
+                    </form>
+                  </li>
+                <% }) %>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div class="box-2">
+          <p class="user-info">Kullanıcı Bilgileri</p>
+          <form
+            action="/update-user"
+            method="POST"
+            enctype="multipart/form-data"
+          >
+          <input type="hidden" name="kullaniciID" value="<%= user.kullaniciID %>" />
+          <ul class="user-list">
+            <li class="user-item">
+              <p class="user-text">Ad:</p>
+              <input type="text" name="k_ad" value="<%= user.kullaniciAd %>" />
+            </li>
+            <li class="user-item">
+              <p class="user-text">Soyad:</p>
+              <input type="text" name="k_soyad" value="<%= user.kullaniciSoyad %>" />
+            </li>
+            <li class="user-item">
+              <p class="user-text">Profil Fotoğrafı:</p>
+              <input type="file" name="k_foto" accept="image/*" />
+            </li>
+            <li class="user-item">
+              <p class="user-text">Kullanıcı Adı:</p>
+              <input
+                type="text"
+                name="k_kullaniciAdi"
+                value="<%= user.kullaniciAdi %>"
+              />
+            </li>
+            <li class="user-item">
+              <p class="user-text">Şifre:</p>
+              <input type="password" name="k_sifre" value="<%= user.kullaniciSifre %>" />
+            </li>
+            <li class="user-item">
+              <p class="user-text">Doğum Tarihi:</p>
+              <input
+                type="date"
+                name="k_dt"
+                value="<%= user.kullaniciDt ? user.kullaniciDt.toISOString().split('T')[0] : '' %>"
+              />
+            </li>
+            <li class="user-item">
+              <p class="user-text">Cinsiyet:</p>
+              <select class="user-cinsiyet" name="k_cinsiyet" required>
+                <option value="" disabled selected>Seçiniz</option>
+                <option value="Erkek" <%= user.kullaniciCinsiyet === 'Erkek' ? 'selected' : '' %>>Erkek</option>
+                <option value="Kadın" <%= user.kullaniciCinsiyet === 'Kadın' ? 'selected' : '' %>>Kadın</option>
+              </select>
+            </li>
+            <li class="user-item">
+              <p class="user-text">E-posta Adresi:</p>
+              <input type="text" name="k_eposta" value="<%= user.kullaniciEposta %>"/>
+            </li>
+            <li class="user-item">
+              <p class="user-text">Konum (İl/İlçe):</p>
+              <input type="text" name="k_konum" value="<%= user.kullaniciKonum %>" />
+            </li>
+            <li class="user-item">
+              <p class="user-text">Telefon Numarası:</p>
+              <input type="tel" pattern="[0-9]{10}" placeholder="5551234567" name="k_telefon" value="<%= user.kullaniciTelefon %>"/>
+            </li>
+          </ul>
+          <button class="user-btn" value="submit">Bilgileri Güncelle</button>
+        </form>
+        </div>
+      </section>
+    </main>
+  </body>
+</html>

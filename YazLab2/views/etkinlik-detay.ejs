@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300..900;1,300..900&display=swap"
+      rel="stylesheet"
+    />
+
+    <script
+      type="module"
+      src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"
+    ></script>
+    <script
+      nomodule
+      src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"
+    ></script>
+
+    <title>Etkinlik</title>
+    <link rel="stylesheet" href="css/etkinlik_detay.css" />
+  </head>
+  <body>
+    <header class="header">
+      <a href="/user-index?id=<%= user.kullaniciID %>"
+        ><img class="logo" src="img/logo.png" alt="Events-Logo"
+      /></a>
+      <nav class="main-nav">
+        <ul class="main-nav-list">
+          <li>
+            <ion-icon name="today-outline" class="nav-icon"></ion-icon>
+            <a class="main-nav-link" href="/etkinlik-ekle">Etkinlik Ekle</a>
+          </li>
+          <li>
+            <ion-icon name="person-outline" class="nav-icon"></ion-icon>
+            <a
+              class="main-nav-link"
+              href="/user-page?id=<%= user.kullaniciID %>"
+              ><%= user.kullaniciAdi %></a
+            >
+          </li>
+          <li>
+            <ion-icon name="ribbon-outline" class="nav-icon"></ion-icon>
+            <a class="main-nav-link" href="#"><%= user.kullaniciPuan %> Puan</a>
+          </li>
+          <li>
+            <ion-icon name="exit-outline" class="nav-icon"></ion-icon>
+            <a class="main-nav-link" href="/logout">Çıkış</a>
+          </li>
+        </ul>
+      </nav>
+    </header>
+
+    <main>
+      <section class="container etkinlik-section">
+        <div class="etkinlik-grid">
+          <div>
+            <img
+              src="<%= event.etkinlikFoto %>"
+              alt="<%= event.etkinlikAdi %>"
+              class="etkinlik-image"
+            />
+          </div>
+          <div>
+            <p class="etkinlik-adi"><%= event.etkinlikAdi %></p>
+            <ul class="etkinlik-list">
+              <li class="etkinlik-item">
+                <ion-icon class="event-icon" name="copy-outline"></ion-icon>
+                <%= event.etkinlikKategori %>
+              </li>
+              <li class="etkinlik-item">
+                <ion-icon class="event-icon" name="location-outline"></ion-icon>
+                <%= event.etkinlikKonum %>
+              </li>
+              <li class="etkinlik-item">
+                <ion-icon name="enter-outline" class="event-icon"></ion-icon>
+                <%= event.etkinlikTarih %> - <%= event.etkinlikSaat %>
+              </li>
+              <li class="etkinlik-item">
+                <ion-icon name="exit-outline" class="event-icon"></ion-icon>
+                <%= event.etkinlikBitisTarih %> - <%= event.etkinlikBitisSaat %>
+              </li>
+            </ul>
+            <form
+              action="/etkinlik-katil?userId=<%= user.kullaniciID %>&eventId=<%= event.etkinlikID %>"
+              method="POST"
+            >
+              <button type="submit" class="etkinlik-btn" <% if (katildiMi) { %>
+                disabled <% } %> > <% if (katildiMi) { %> Etkinliğe Katıldınız
+                <% } else { %> Etkinliğe Katıl <% } %>
+              </button>
+            </form>
+          </div>
+        </div>
+      </section>
+
+      <!-- Harita Görseli -->
+      <section class="container map-section">
+        <div id="map" style="height: 400px; width: 100%"></div>
+
+        <!-- Ulaşım Türü Butonları -->
+        <div class="map-info">
+          <div class="map-btns">
+            <button id="walkButton" class="map-btn">
+              <ion-icon name="walk-outline" class="map-icon"></ion-icon
+              >Yürüyerek
+            </button>
+            <button id="driveButton" class="map-btn">
+              <ion-icon name="car-outline" class="map-icon"></ion-icon>Araçla
+            </button>
+          </div>
+
+          <div id="map-info"></div>
+        </div>
+      </section>
+
+      <section class="container comment-section">
+        <% if (yorumlar.length > 0) { %>
+        <div class="comment-scrollable">
+          <% yorumlar.forEach(yorum => { %>
+          <div class="comment-all">
+            <div class="comment-user">
+              <div>
+                <img
+                  src="<%= yorum.kullaniciFoto || '/img/default-user.png' %>"
+                  alt="user-foto"
+                  class="user-foto"
+                />
+              </div>
+
+              <div class="comment-info">
+                <p class="user-name"><%= yorum.kullaniciAdi %></p>
+                <p class="comment-time">
+                  <%= new Date(yorum.mesajZaman).toLocaleString() %>
+                </p>
+              </div>
+            </div>
+            <div class="comment-text">
+              <p><%= yorum.mesajMetin %></p>
+            </div>
+          </div>
+          <% }) %>
+        </div>
+        <% } else { %>
+        <p>Henüz yorum yapılmamış.</p>
+        <% } %>
+
+        <div class="comment-new">
+          <form
+            action="/yorum-ekle?userId=<%= user.kullaniciID %>&eventId=<%= event.etkinlikID %>"
+            method="POST"
+          >
+            <div class="comment-user">
+              <div>
+                <img
+                  src="<%= user.kullaniciFoto %>"
+                  alt="user-foto"
+                  class="user-foto"
+                />
+              </div>
+              <div>
+                <p class="user-name"><%= user.kullaniciAdi %></p>
+              </div>
+            </div>
+            <div class="comment-new-text">
+              <textarea
+                name="mesajMetin"
+                id=""
+                placeholder="Yorumunuzu buraya yazın..."
+              ></textarea>
+            </div>
+            <button type="submit" class="add-comment-btn">Yorum Ekle</button>
+          </form>
+        </div>
+      </section>
+    </main>
+    <script
+      src="https://maps.googleapis.com/maps/api/js?key=API_KEY&callback=initMap"
+      async
+      defer
+    ></script>
+    <script src="/js/map.js"></script>
+    <script>
+      window.onload = function () {
+        fetch(
+          `/get-location-data?eventId=${new URLSearchParams(
+            window.location.search
+          ).get("eventId")}`
+        )
+          .then((response) => response.json())
+          .then((data) => {
+            window.userKonum = data.userKonum;
+            window.eventKonum = data.eventKonum;
+            initMap();
+          })
+          .catch((error) => {
+            console.error("Konum verisi alınırken hata oluştu:", error);
+          });
+      };
+    </script>
+  </body>
+</html>

@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap"
+      rel="stylesheet"
+    />
+    <script
+      type="module"
+      src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"
+    ></script>
+    <script
+      nomodule
+      src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"
+    ></script>
+
+    <title>EVENTS</title>
+
+    <link rel="stylesheet" href="/css/user_index.css" />
+  </head>
+  <body>
+    <header class="header">
+      <a href="/user-index?id=<%= user.kullaniciID %>"
+        ><img class="logo" src="img/logo.png" alt="Events-Logo"
+      /></a>
+      <nav class="main-nav">
+        <ul class="main-nav-list">
+          <li>
+            <ion-icon name="today-outline" class="nav-icon"></ion-icon>
+            <a class="main-nav-link" href="/etkinlik-ekle">Etkinlik Ekle</a>
+          </li>
+          <li>
+            <ion-icon name="person-outline" class="nav-icon"></ion-icon>
+            <a
+              class="main-nav-link"
+              href="/user-page?id=<%= user.kullaniciID %>"
+              ><%= user.kullaniciAdi %></a
+            >
+          </li>
+          <li>
+            <ion-icon name="ribbon-outline" class="nav-icon"></ion-icon>
+            <a class="main-nav-link" href="#"><%= user.kullaniciPuan %> Puan</a>
+          </li>
+          <li>
+            <ion-icon name="exit-outline" class="nav-icon"></ion-icon>
+            <a class="main-nav-link" href="/logout">Çıkış</a>
+          </li>
+        </ul>
+      </nav>
+    </header>
+
+    <main>
+      <section class="main-kategoriler container">
+        <nav class="kategori-nav">
+          <ul class="kategori-list">
+            <a
+              href="/user-index?category=konser&id=<%= user.kullaniciID %>"
+              class="kategori-btn"
+              ><li class="kategori">
+                <img src="/img/konser-logo.png" class="kategori-img" />
+                <p>Konser</p>
+              </li>
+            </a>
+
+            <a
+              href="/user-index?category=tiyatro&id=<%= user.kullaniciID %>"
+              class="kategori-btn"
+              ><li class="kategori">
+                <img src="/img/tiyatro-logo.png" class="kategori-img" />
+                <p>Tiyatro</p>
+              </li>
+            </a>
+
+            <a
+              href="/user-index?category=festival&id=<%= user.kullaniciID %>"
+              class="kategori-btn"
+              ><li class="kategori">
+                <img src="/img/festival-logo.png" class="kategori-img" />
+                <p>Festival</p>
+              </li>
+            </a>
+
+            <a
+              href="/user-index?category=standup&id=<%= user.kullaniciID %>"
+              class="kategori-btn"
+            >
+              <li class="kategori">
+                <img src="/img/standup-logo.png" class="kategori-img" />
+                <p>Stund-Up</p>
+              </li>
+            </a>
+          </ul>
+        </nav>
+      </section>
+
+      <section class="events-section">
+        <h3 class="container event-main-name">
+          <% if (category) { %> <%= category.charAt(0).toUpperCase() +
+          category.slice(1) %> Etkinlikleri <% } else { %> Etkinlikler <% } %>
+        </h3>
+        <div class="container grid grid--3-cols">
+          <% if (events.length > 0) { %> <% events.forEach(event => { %>
+          <div class="event">
+            <img
+              src="<%= event.etkinlikFoto %>"
+              alt="<%= event.etkinlikAdi %>"
+              class="event-image"
+            />
+            <div class="event-main">
+              <p class="event-name"><%= event.etkinlikAdi %></p>
+              <ul class="event-items">
+                <li class="event-item">
+                  <ion-icon class="event-icon" name="copy-outline"></ion-icon>
+                  <%= event.etkinlikKategori %>
+                </li>
+                <li class="event-item">
+                  <ion-icon
+                    class="event-icon"
+                    name="location-outline"
+                  ></ion-icon>
+                  <%= event.etkinlikKonum %>
+                </li>
+                <li class="event-item">
+                  <ion-icon
+                    class="event-icon"
+                    name="calendar-outline"
+                  ></ion-icon>
+                  <%= event.etkinlikTarih %> - <%= event.etkinlikSaat %>
+                </li>
+              </ul>
+              <a
+                href="/etkinlik-detay?userId=<%= user.kullaniciID %>&eventId=<%= event.etkinlikID %>"
+                ><button class="event-btn">
+                  <strong>Etkinlik Detayları</strong>
+                </button></a
+              >
+            </div>
+          </div>
+          <% }); %> <% } %>
+        </div>
+      </section>
+    </main>
+
+    <script src="#"></script>
+  </body>
+</html>
