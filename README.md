@@ -38,7 +38,7 @@ The goal of this project is to create a web-based platform where users can organ
 * Developing a smart system that provides rule-based personalized recommendations.
 
 
-In this project, I used HTML, CSS, JavaScript, and Node.js. Detailed explanations are provided in [my project report](https://github.com/ceritbariss/events-web-app/blob/main/rapor.pdf).
+In this project, I used HTML, CSS, JavaScript, and Node.js. Detailed explanations are available in [my project report](https://github.com/ceritbariss/events-web-app/blob/main/rapor.pdf).
 
 Screenshots of my solution:
 ![1](https://github.com/ceritbariss/events-web-app/blob/main/README_pics/img1.png?raw=true)
